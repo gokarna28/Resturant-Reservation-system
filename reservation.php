@@ -156,7 +156,16 @@ if (isset($_SESSION['customer_id'])) {
                                     <?php echo $row_book['status'] ?>
                                 </td>
                                 <td>
-                                    <a href="cancel_booking.php?id=<?php echo $row_book['booking_id']?>" onclick="return confirmCancel()">Cancel</a>
+                                    <?php
+                                    if ($row_book['status'] == 'over') {
+                                        echo 'Cancel';
+                                    } else {
+                                        ?>
+                                        <a href="cancel_booking.php?id=<?php echo $row_book['booking_id'] ?>"
+                                            onclick="return confirmCancel()">Cancel</a>
+                                        <?php
+                                    }
+                                    ?>
                                 </td>
                             </tr>
                             <?php
@@ -167,11 +176,11 @@ if (isset($_SESSION['customer_id'])) {
             </table>
         </div>
     </div>
-<script>
-    function confirmCancel(){
-        return confirm('Are You Sure, you want to cancel the booking');
-    }
-</script>
+    <script>
+        function confirmCancel() {
+            return confirm('Are You Sure, you want to cancel the booking');
+        }
+    </script>
 </body>
 
 </html>
