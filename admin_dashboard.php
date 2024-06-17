@@ -34,18 +34,20 @@ if (isset($_SESSION['admin_id'])) {
                 window.history.replaceState(null, null, window.location.href);
             }
         </script>
+       
 </head>
 
 <body>
-    <div class="main_container">
+    <div class="main_container"
+        style="background-image:url('image/admin.jpg');background-repeat: no-repeat;background-position: center;background-size: cover;height: 100vh;">
 
         <div class="nav">
             <h1>Admin Panel</h1>
             <div class="menu">
                 <a href="#">Dashboard</a>
                 <a href="add_table.php">Add Table</a>
-                <a href="#">Reservation</a>
-                <a href="#">Customers</a>
+                <a href="reservation_record.php">Reservation</a>
+                <a href="customer_record.php">Customers</a>
             </div>
             <dic class="logout_btn">
                 <button><a href="logout.php">Logout</a></button>
@@ -69,11 +71,13 @@ if (isset($_SESSION['admin_id'])) {
                     </thead>
                     <tbody>
                         <?php
+                        $currentDate = date('Y/M/d l');
 
                         $select = "SELECT * 
                     FROM reservation as r
                     INNER JOIN customer as c ON r.customer_id=c.customer_id
                     INNER JOIN tables as t ON r.t_id=t.table_id
+                    WHERE date='$currentDate' AND status='booked'
                     ORDER BY date";
                         $data = mysqli_query($con, $select);
                         if (mysqli_num_rows($data) > 0) {
@@ -105,6 +109,7 @@ if (isset($_SESSION['admin_id'])) {
                                     <td>
                                         <a href="cancel_booking_admin.php?id=<?php echo $row_book['booking_id'] ?>"
                                             onclick="return confirmCancel()">Cancel</a>
+                                        <a href="over_booking_admin.php?id=<?php echo $row_book['booking_id'] ?>">Over</a>
                                     </td>
                                 </tr>
                                 <?php
@@ -122,6 +127,13 @@ if (isset($_SESSION['admin_id'])) {
         function confirmCancel() {
             return confirm('Are You Sure, you want to cancel the booking');
         }
+
+        // current date
+        document.addEventListener('DOMContentLoaded', function () {
+            var today = new Date().toISOString().slice(0, 10);
+
+            document.getElementById('datepicker').value = today;
+        });
     </script>
 </body>
 

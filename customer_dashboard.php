@@ -40,7 +40,13 @@ if (isset($_SESSION['customer_id'])) {
 </head>
 
 <body>
-    <div class="main_container">
+    <!-- <div class="background_img">
+        <img src="image/img-1.jpg">
+    </div> -->
+    
+    <div class="main_container"
+        style="background-image:url('image/img-2.jpg');background-repeat: no-repeat;background-position: center;background-size: cover;height: 100vh;">
+
         <div class="nav">
             <h1>Reservation-X</h1>
             <div class="menu">
@@ -64,7 +70,7 @@ if (isset($_SESSION['customer_id'])) {
         <div class="hero">
             <p>Resturant Booking Website</p>
             <h1>Book Your Table Here</h1>
-            <a href="book.php"><button>Book Your Table</button></a>
+            <a href="book.php"><button class="book_btn">Book Your Table</button></a>
         </div>
         <button class="logout_btn"><a href="logout.php">Logout</a></button>
 

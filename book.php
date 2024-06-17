@@ -175,19 +175,19 @@ if (isset($_SESSION['customer_id'])) {
 
                         <?php
                         include ("connection.php");
-                        $select_query = "SELECT t.table_name, t.table_id, t.table_details, r.date, r.t_id, r.status
+                        $select_query = "SELECT t.table_name, t.table_id, t.table_details
                         FROM tables as t
-                        LEFT JOIN reservation as r ON t.table_id=r.t_id
                         ORDER BY t.table_id";
                         $select_data = mysqli_query($con, $select_query);
+                        
                         if (mysqli_num_rows($select_data) > 0) {
                             while ($result_table = mysqli_fetch_assoc($select_data)) {
-                                $is_reserved = false;
-                           // Check if the reservation date matches the current date
-                           if($result_table['table_id']==$result_table['t_id'] && $result_table['date']==$currentDate){
-                            $is_reserved = true;
-
-                           }
+                                $table_id = $result_table['table_id'];
+                                $select_reservation = "SELECT * FROM reservation WHERE t_id = $table_id AND date = '$currentDate' AND status = 'booked'";
+                                $reservation_data = mysqli_query($con, $select_reservation);
+                                
+                                // Check if there is a reservation matching the current table ID, date, and status
+                                $is_reserved = mysqli_num_rows($reservation_data) > 0;
                            
                            ?>
                            <button type="submit" name="book" value="<?php echo $result_table['table_id']; ?>"
@@ -258,4 +258,9 @@ if (isset($_POST['book'])) {
         //echo "successfully update";
     }
 }
+?>
+<?php
+$currentDate = date('Y/M/d l');
+$update="UPDATE reservation SET status='over' WHERE date!='$currentDate'";
+$data=mysqli_query($con, $update);
 ?>

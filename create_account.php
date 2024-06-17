@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <linkrel="stylesheet"href="admin.css">
         <title>Admin Login </title>
-        <link rel="stylesheet" href="login.css">
+        <link rel="stylesheet" href="css/login1.css">
         <!-- Link to Font Awesome CSS -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
         <!-- Import Google font - Poppins  -->
@@ -58,6 +58,7 @@ if (isset($_POST['singup'])) {
     $insert_data = mysqli_query($con, $insert_query);
     if ($insert_data) {
         echo "<script>alert('resistration successfull')</script>";
+        header('location:login.php');
     } else {
         echo "<script>alert('failed to register')</script>" . mysqli_error($con);
     }
